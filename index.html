@@ -39,7 +39,7 @@
 		<div class="reveal">
 
 			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+			<section class="slides">
 				<section>
 					<h1>Why Type Script ?</h1>
 					<p>
@@ -221,19 +221,169 @@ save(10, {name : "max"}).then((res) =>
 					<p>Special type, basically do nothing
 						<pre>
 							<code data-trim contenteditable>
-								var name : any = "word";
-								name = 12; //ok !
+var name : any = "word";
+name = 12; //ok !
 							</code>
 						</pre>
 					Often used to cast types when necessary
 <pre>
 	<code data-trim contenteditable>
-		var name : string = "word";
-		var age : number = 30;
-		name = &lt;any&gt; age; //ok !
+var name : string = "word";
+var age : number = 30;
+name = &lt;any&gt; age; //ok !
 	</code>
 </pre>
 					</p>
+				</section>
+
+				<section>
+				<section>
+					<h2>Transpiler</h2>
+					<p>TypeScript -> ES6, ES5, ES3, you choose</p>
+					<h3>ES 6</h3>
+						<pre>
+							<code data-trim contenteditable>
+class Calc {
+	var a;
+	constructor (var a) { this.a = a; }
+	add = (a, b) => a + b;
+	sub(a, b) {return a - b;}
+
+}
+							</code>
+						</pre>
+				</section>
+				<section>
+					<h3>Type Script</h3>
+						<pre>
+							<code data-trim contenteditable>
+class Calc {
+var a : number;
+constructor (var a: number) { this.a = a; }
+add = (a: number, b: number) : number => a + b;
+sub(a: number, b: number) : number {return a - b;}
+
+}
+							</code>
+						</pre>
+					<p>Look, TypeScript added only Types ! Important to distinct ES6 features and TypeScript features !</p>
+				</section>
+				<section>
+					<p>Caveat, you can define constructor from above as</p>
+						<pre>
+							<code data-trim contenteditable>
+constructor (private var a: number) {  }
+							</code>
+						</pre>
+					<p>Indeed type script, add not only type features!</p>
+				</section>
+				</section>
+
+				<section>
+				<section>
+					<h2>More</h2>
+					<h3>Inheritance</h3>
+					<p>Same rules as in other object oriented languages</p>
+										<pre>
+											<code data-trim contenteditable>
+interface IPersonEx extends IPerson {
+	sex : string
+}
+											</code>
+										</pre>
+
+				</section>
+				<section>
+					<h3>Declare</h3>
+					<p>Declare external global variables, for example global windows object object</p>
+					<pre>
+						<code data-trim contenteditable>
+declare var window; //have any type automatically
+						</code>
+					</pre>
+
+				</section>
+				</section>
+
+				<section>
+				<section>
+					<h2>External modules definitions</h2>
+					<p>
+						If we use external js libraries in project and would like to have typings for these libraries,
+						it is possible to add types declarations separately (like header files in C)
+						You can use jquery library and create type definitions for one (jquery.d.ts) or you can download
+						type definition file from <a href="http://definitelytyped.org/">definitelytyped.org</a>
+					</p>
+				</section>
+				<section>
+					<h3>Note</h3>
+					<p>
+						You must not declare type definition files (d.ts) for your own type script code.
+						These files will be compiled automatically.
+						Basically transpiler output transpiled ts file in form of js file, which you could use
+						in other js projects and type defintion file d.ts which you can include to type script
+						pojects to have typings benefit.
+					</p>
+				</section>
+				</section>
+
+				<section>
+				<section>
+					<h2>Module system</h2>
+					<p>
+						ES 5, have not module support, but we can imitate it by space names (scopes in js)
+					</p>
+					<pre>
+						<code data-trim contenteditable>
+module RootModule {
+	export class A {}
+}
+module SecondModule {
+	export class A {}
+}
+//and use it
+var A1 = RootModule.A;
+var A2 = SecondModule.A;
+						</code>
+					</pre>
+					<p>`module` keyword is somehow misguided since it is not module in common language definition but simple namespace.</p>
+				</section>
+				<section>
+					<p>
+						ES 6 modules
+					</p>
+				<pre>
+					<code data-trim contenteditable>
+//file rootFile.js
+export class A {}
+}
+//file seconFile.js
+export class B {}
+}
+//file index.js
+import {A as A1} from "rootFile"
+import {A as A2} from "secondFile"
+					</code>
+				</pre>
+					<p>Can be transpiled to 2 types of module systems of ES5 (not statdardized) amd and commonjs </p>
+					<p>TypeScript module aka namespace -> transpiled to ES 5 "modules"</p>
+					<p>ES6 module (v 1.5) -> transpiled to ES 5 "modules"</p>
+				</section>
+				</section>
+
+				<section>
+					<h3>Links</h3>
+					<ul>
+						<li>
+							<a href="http://definitelytyped.org/">Typings for exitents java script libraries</a>
+						</li>
+						<li>
+							<a href="http://www.typescriptlang.org/Handbook">Type Script handbook</a>
+						</li>
+						<li>
+							<a href="https://github.com/lukehoban/es6features">ES6 features</a>
+						</li>
+					</ul>
 				</section>
 
 				<!-- Example of nested vertical slides -->
