@@ -158,26 +158,58 @@ person.id = 100; // error !
 					<h2>Enums</h2>
 						<pre>
 							<code data-trim contenteditable>
-								interface IPerson {
-								name : string
-								age? : number // could be omitted on instantiation
-								}
+enum MediaType {image, video};
 
-								var person : IPerson = { name : "max" }; //ok
+var mType : MeiaType = MediaType.image; //ok
+mType = "video"; // error
 
-								var person : IPerson = {}; //error, name is required !
+//Actually numbers
 
-								var person : IPerson = &lt;any&gt; {}; //ok, any magic
+assert(mType.image == 0); //true
 
-								var person : IPerson = {
-								name: string,
-								age: 35,
-								sex: "male" // notice not declared field, better not use !!!
-								}; // also ok
+//Starts from zero, can be redefined
 
-								// BUT
-								person.id = 100; // error !
-								(&lt;any&gt;person).id = 100; //ok
+enum MediaType {image = 1, video = 10};
+
+//Actially can convert to string (wierd !)
+
+assert(MeiaType[MeiaType.image] == "image"); //true
+
+							</code>
+						</pre>
+
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						##Enum hickups
+						Data from server usually define enum fields as "strings"
+						`{mType : "image"}`, no way to direct convert into TypeScript enum value
+
+						No sence to use in html templates, since no type checking here
+						&lt;span ng-if="mType == MediaType.audio"&gt;&lt;/span&gt;
+						no error, but type `audio` not exists.
+
+						Popular demand to have enums defined with string values, should be added in future versions.
+						Better IDE support also coming.
+					</script>
+
+
+				</section>
+
+				<section>
+					<h2>Function declaration</h2>
+						<pre>
+							<code data-trim contenteditable>
+
+function save(id: string, person: IPerson) : IPromise&lt;boolean&gt; {
+	//error nothing returns
+}
+
+//error first parameter must be a string !
+save(10, {name : "max"}).then((res) =>
+	console.log(res.sex); // error, no field sex, on type IPerson
+);
 
 							</code>
 						</pre>
